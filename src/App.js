@@ -5,6 +5,7 @@ import './App.css';
 
 
 function App() {
+
   const temp_json = 
     {
       "head": {
@@ -115,7 +116,32 @@ function App() {
 
   const [resultado_filtrado, setResultadoFitrado] = useState(resultado);
 
-  console.log(resultado_filtrado)
+  console.log(resultado)
+
+  function filtrarResultados(e) {
+    console.log(e.target.value);
+    setResultadoFitrado(resultado);
+    
+    
+    resultado.forEach(buscarTermino);
+
+    function buscarTermino(item, index){
+      console.log(index);
+
+      let value = false;
+
+      let elementos_fila = Object.values(item);
+
+      elementos_fila.forEach(buscarValor)
+
+      function buscarValor(item, index){
+
+
+      }
+    }
+
+  }
+
 
 
   return (
@@ -174,7 +200,7 @@ function App() {
             <label className="mb-1 md:mb-0 pr-4">
               Escriba una palabra para filtrar :
             </label>
-              <input className="text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"/>
+              <input className="text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" onChange={filtrarResultados} />
           </div>
         </div>
         
@@ -190,13 +216,13 @@ function App() {
                 }
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-sm">
               {
                 resultado_filtrado.map(
                   (elemento) =>
                   <tr> 
                       {Object.entries(elemento).map(
-                        ([key, value]) => <td className="border px-4 py-2">{value['value']}</td>
+                        ([key, value]) => <td className="border px-4 py-2" key={key}>{value['value']}</td>
                       )}
                   </tr>
                 )
