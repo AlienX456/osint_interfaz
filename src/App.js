@@ -116,31 +116,35 @@ function App() {
 
   const [resultado_filtrado, setResultadoFitrado] = useState(resultado);
 
-  console.log(resultado)
 
   function filtrarResultados(e) {
-    console.log(e.target.value);
-    setResultadoFitrado(resultado);
-    
-    
-    resultado.forEach(buscarTermino);
 
-    function buscarTermino(item, index){
-      console.log(index);
+    let arreglo_filtrado = [];
 
-      let value = false;
+
+    for (let item of resultado){
 
       let elementos_fila = Object.values(item);
 
-      elementos_fila.forEach(buscarValor)
+      let verificado = false;
 
-      function buscarValor(item, index){
+      for (let child of elementos_fila){
 
-
+        if (child['value'].toLowerCase().includes(e.target.value.toLowerCase())){
+          verificado = true;
+        } 
       }
+
+      if (verificado) {
+        arreglo_filtrado.push(item)
+      }
+
     }
 
-  }
+    setResultadoFitrado(arreglo_filtrado);
+
+    }
+
 
 
 
