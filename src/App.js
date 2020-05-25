@@ -109,9 +109,11 @@ function App() {
   const subtitulo = 'Interfaz de Consulta';
   const objetos_busqueda = {1:'Autor',2:'Institución',3:'Grupo',4:'Título',5:'Materias',6:'P. claves',7:'Colección',8:'Subcomunidad'};
 
-  const [resultado, setResultado] = useState(temp_json);
+  const [header, setHeader] = useState(temp_json['head']['vars']);
 
-  const [resultado_filtrado, setResultadoFitrado] = useState(temp_json);
+  const [resultado, setResultado] = useState(temp_json['results']['bindings']);
+
+  const [resultado_filtrado, setResultadoFitrado] = useState(resultado);
 
   console.log(resultado_filtrado)
 
@@ -180,78 +182,25 @@ function App() {
           <table className="table-auto mx-auto my-auto border-2">
             <thead>
               <tr>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Author</th>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Author</th>
-                <th className="px-4 py-2">Title</th>
-                <th className="px-4 py-2">Author</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
-                <th className="px-4 py-2">Views</th>
+
+                {header.map
+                  (
+                    (head) =><th className="px-4 py-2">{head}</th>
+                  )
+                }
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="border px-4 py-2">Intro to CSS</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">Intro to CSS</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">Intro to CSS</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-              </tr>
-              <tr className="bg-gray-100">
-                <td className="border px-4 py-2">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on Design</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on Design</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on Design</td>
-                <td className="border px-4 py-2">Adam</td>
-                <td className="border px-4 py-2">112</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-              </tr>
-              <tr>
-                <td className="border px-4 py-2">Intro to JavaScript</td>
-                <td className="border px-4 py-2">Chris</td>
-                <td className="border px-4 py-2">Intro to JavaScript</td>
-                <td className="border px-4 py-2">Chris</td>
-                <td className="border px-4 py-2">Intro to JavaScript</td>
-                <td className="border px-4 py-2">Chris</td>
-                <td className="border px-4 py-2">1,280</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-                <td className="border px-4 py-2">858</td>
-              </tr>
+              {
+                resultado_filtrado.map(
+                  (elemento) =>
+                  <tr> 
+                      {Object.entries(elemento).map(
+                        ([key, value]) => <td className="border px-4 py-2">{value['value']}</td>
+                      )}
+                  </tr>
+                )
+              }
             </tbody>
           </table>
         </div>
