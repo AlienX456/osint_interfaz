@@ -120,8 +120,8 @@ function App() {
     <div>
 
 
-      <div className="flex flex-wrap mt-8">
-        <div className="w-3/4 mx-auto my-auto text-center text-xl shadow-2xl bg-white shadow-md rounded px-8 pt-12 pb-12 mb-4">
+      <div className="flex flex-wrap mt-8 mb-4">
+        <div className="w-3/4 mx-auto my-auto text-center text-xl shadow-2xl bg-white shadow-md rounded px-8 pt-12 pb-12">
             <p>{titulo}</p>
             <p>{subtitulo}</p>
         </div>
@@ -132,7 +132,7 @@ function App() {
 
       <form>
         <div className="flex flex-wrap py-8">
-          <div className="flex w-3/4 mx-auto px-4 text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="flex w-3/4 mx-auto px-4 text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8">
               <div className="w-2/4">
                 <label className="mx-auto block mb-4">
                   <input className="mr-2 leading-tight" type="checkbox"/>
@@ -164,14 +164,49 @@ function App() {
 
 
       
-      <div className="flex flex-wrap py-8">
+      <div className="flex flex-wrap py-4">
+        <div className="w-3/4 mx-auto text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-
-        <div className="w-3/8 mx-auto text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          sdsfsdfsdf
+        <div className="flex flex-row-reverse mb-16">
+          <div className="lg:w-3/4">
+            <label className="mb-1 md:mb-0 pr-4">
+              Escriba una palabra para filtrar :
+            </label>
+              <input className="text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"/>
+          </div>
+        </div>
+        
+        <div className="flex">
+          <table className="table-auto mx-auto my-auto border-2">
+            <thead>
+              <tr>
+                <th className="px-4 py-2">Title</th>
+                <th className="px-4 py-2">Author</th>
+                <th className="px-4 py-2">Views</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border px-4 py-2">Intro to CSS</td>
+                <td className="border px-4 py-2">Adam</td>
+                <td className="border px-4 py-2">858</td>
+              </tr>
+              <tr className="bg-gray-100">
+                <td className="border px-4 py-2">A Long and Winding Tour of the History of UI Frameworks and Tools and the Impact on Design</td>
+                <td className="border px-4 py-2">Adam</td>
+                <td className="border px-4 py-2">112</td>
+              </tr>
+              <tr>
+                <td className="border px-4 py-2">Intro to JavaScript</td>
+                <td className="border px-4 py-2">Chris</td>
+                <td className="border px-4 py-2">1,280</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-      
+
+        </div>
       </div>
 
 
