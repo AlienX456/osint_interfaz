@@ -1,120 +1,58 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
 import React, { useState } from 'react';
 import './App.css';
 
 
 function App() {
 
-  const temp_json = 
-    {
-      "head": {
-        "vars": [
-          "title",
-          "author",
-          "date",
-          "graph"
-        ]
-      },
-      "results": {
-        "bindings": [
-          {
-            "title": {
-              "type": "literal",
-              "value": "El blog interactivo para la clase de matemáticas"
-            },
-            "author": {
-              "type": "literal",
-              "value": "Diseño::Validador Educativo - Teresa Rojas"
-            },
-            "date": {
-              "type": "literal",
-              "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
-              "value": "2020-02-11"
-            },
-            "graph": {
-              "type": "uri",
-              "value": "http://localhost:8080/rdf/resource/123456789/14"
-            }
-          },
-          {
-            "title": {
-              "type": "literal",
-              "value": "El blog interactivo para la clase de matemáticas"
-            },
-            "author": {
-              "type": "literal",
-              "value": "Contenido::Proveedor - Catalina Rojas"
-            },
-            "date": {
-              "type": "literal",
-              "datatype": "http://www.w3.org/2001/XMLSchema#dateTime",
-              "value": "2020-02-11"
-            },
-            "graph": {
-              "type": "uri",
-              "value": "http://localhost:8080/rdf/resource/123456789/14"
-            }
-          },
-          {
-            "title": {
-              "type": "literal",
-              "value": "Euthanasia of Raccoon City"
-            },
-            "author": {
-              "type": "literal",
-              "value": "https://open.spotify.com/album/2f8psgefNAeQztCpBnARL4"
-            },
-            "graph": {
-              "type": "uri",
-              "value": "http://localhost:8080/rdf/resource/123456789/12"
-            }
-          },
-          {
-            "title": {
-              "type": "literal",
-              "value": "Resident Evil: La Conspiración Umbrella"
-            },
-            "author": {
-              "type": "literal",
-              "value": "Design::Educational Validator - Teresa Rojas"
-            },
-            "graph": {
-              "type": "uri",
-              "value": "http://localhost:8080/rdf/resource/123456789/16"
-            }
-          },
-          {
-            "title": {
-              "type": "literal",
-              "value": "Concepto de Punteros en C"
-            },
-            "author": {
-              "type": "literal",
-              "value": "https://open.spotify.com/album/2f8psgefNAeQztCpBnARL4"
-            },
-            "graph": {
-              "type": "uri",
-              "value": "http://localhost:8080/rdf/resource/123456789/13"
-            }
-          }
-        ]
-      }
-    }
-
-
-
-
 
   const titulo = 'Metamodelo para vinculación de recursos educativos abiertos mediante especificaciones LOD y basado en principios de confianza';
   const subtitulo = 'Interfaz de Consulta';
   const objetos_busqueda = {1:'Autor',2:'Institución',3:'Grupo',4:'Título',5:'Materias',6:'P. claves',7:'Colección',8:'Subcomunidad'};
 
-  const [header, setHeader] = useState(temp_json['head']['vars']);
+  const [header, setHeader] = useState(null);
 
-  const [resultado, setResultado] = useState(temp_json['results']['bindings']);
+  const [resultado, setResultado] = useState(null);
 
   const [resultado_filtrado, setResultadoFitrado] = useState(resultado);
+  
+
+
+  function consultarRecursos(e){
+    obtenerRecursos(null);
+  }
+
+  function obtenerRecursos(termino){
+    var myHeaders = new Headers();
+//    myHeaders.append("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0");
+    myHeaders.append("Accept", "application/sparql-results+json,*/*;q=0.9");
+    myHeaders.append("Accept-Language", "en-US,en;q=0.5");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    myHeaders.append("X-Requested-With", "XMLHttpRequest");
+    myHeaders.append("Origin", "http://200.69.103.29:26237");
+    myHeaders.append("Connection", "keep-alive");
+    myHeaders.append("Referer", "http://200.69.103.29:26237/fuseki/dataset.html?tab=query&ds=/dspace");
+
+    var ejemplo = "query=PREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX+dcterm%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0Aprefix+void%3A++%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E+%0Aprefix+rdf%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E+%0Aprefix+xsd%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E+%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E+%0Aprefix+bibo%3A++%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E+%0Aprefix+foaf%3A++%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E+%0Aprefix+dc%3A++++%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E+%0Aprefix+dspace%3A+%3Chttp%3A%2F%2Fdigital-repositories.org%2Fontologies%2Fdspace%2F0.1.0%23%3E+%0A%0A%0A%0ASELECT++%3Ftitle+%3Fauthor+%3Fdate+%3Fgraph%0A%0AWHERE+%7B+%0A++GRAPH++%3Fgraph%0A++%7B%0A+%0A++++++%3Fresource+dcterms%3Atitle+%3Ftitle+.%0A++++++%3Fresource+dcterms%3Acontributor+%3Fauthor+.%0A++++++OPTIONAL+%7B%3Fresource+dcterms%3Adate+%3Fdate%7D+.%0A%7D%0A++%7D";
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: ejemplo,
+      redirect: 'follow'
+    };
+
+    fetch("http://200.69.103.29:26237/fuseki/dspace/sparql", requestOptions)
+      .then(response => response.text())
+      .then(result => 
+        {
+          setHeader(JSON.parse(result)['head']['vars']);
+          setResultado(JSON.parse(result)['results']['bindings']);
+          setResultadoFitrado(JSON.parse(result)['results']['bindings']);
+        })
+      .catch(error => console.log('error', error));
+
+  }
+
 
 
   function filtrarResultados(e) {
@@ -162,7 +100,6 @@ function App() {
 
 
 
-      <form>
         <div className="flex flex-wrap py-8">
           <div className="flex w-3/4 mx-auto px-4 text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8">
               <div className="w-2/4">
@@ -186,15 +123,12 @@ function App() {
                   <input className=" text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"/>
               </div>
               <div className="w-2/4 mx-auto my-auto">
-                <button className="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
+                <button className="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={consultarRecursos}>
                   Consultar Recursos
                 </button>
               </div>
             </div>
         </div>
-      </form>
-
-
       
       <div className="flex flex-wrap py-4">
         <div className="w-3/4 mx-auto text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -209,30 +143,37 @@ function App() {
         </div>
         
         <div className="flex overflow-auto">
-          <table className="table-auto mx-auto my-auto border-2">
-            <thead>
-              <tr>
+          { Boolean(resultado_filtrado)
+            ?
+            <table className="table-auto mx-auto my-auto border-2">
+              <thead>
+                <tr>
 
-                {header.map
-                  (
-                    (head) =><th className="px-4 py-2">{head}</th>
+                  {header.map
+                    (
+                      (head) =><th className="px-4 py-2">{head}</th>
+                    )
+                  }
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {
+                  resultado_filtrado.map(
+                    (elemento) =>
+                    <tr> 
+                        {Object.entries(elemento).map(
+                          ([key, value]) => <td className="border px-4 py-2" key={key}>{value['value']}</td>
+                        )}
+                    </tr>
                   )
                 }
-              </tr>
-            </thead>
-            <tbody className="text-sm">
-              {
-                resultado_filtrado.map(
-                  (elemento) =>
-                  <tr> 
-                      {Object.entries(elemento).map(
-                        ([key, value]) => <td className="border px-4 py-2" key={key}>{value['value']}</td>
-                      )}
-                  </tr>
-                )
-              }
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+            :
+            <div className="mx-auto">
+              No hay datos que cargar
+            </div>
+          }
         </div>
 
 
