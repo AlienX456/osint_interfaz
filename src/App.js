@@ -49,12 +49,9 @@ function App() {
       });
 
       temp['results']['bindings'][index] = fila_ordenada;
-
-      console.log(fila_ordenada);
     }
 
     temp['head']['vars'].sort();
-    console.log(temp);
 
     return temp;
 
@@ -85,7 +82,6 @@ function App() {
       .then(response => response.text())
       .then(result => 
         {
-          console.log(JSON.parse(result));
           let temp = complementarDatos(JSON.parse(result));
           setHeader(temp['head']['vars']);
           setResultado(temp['results']['bindings']);
@@ -187,13 +183,13 @@ function App() {
         <div className="flex overflow-auto h-128 border-4">
           { Boolean(resultado_filtrado)
             ?
-            <table className="table-auto mx-auto my-auto border-2">
+            <table className="table-fixed mx-auto my-auto border-2">
               <thead>
                 <tr>
 
                   {header.map
                     (
-                      (head) =><th className="px-4 py-2">{head}</th>
+                      (head) =><th className="px-4 py-2 w-64 border-2">{head}</th>
                     )
                   }
                 </tr>
@@ -204,7 +200,12 @@ function App() {
                     (elemento) =>
                     <tr> 
                         {Object.entries(elemento).map(
-                          ([key, value]) => <td className="border px-4 py-2" key={key}>{value['value']}</td>
+                          ([key, value]) => 
+                          <td className="border px-4 py-2" key={key}>
+                            <div className="overflow-auto h-32 w-64">
+                            {value['value']}
+                            </div>
+                            </td>
                         )}
                     </tr>
                   )
