@@ -68,7 +68,42 @@ function App() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
 
-    let consulta_sparql = "PREFIX dct: <http://purl.org/dc/terms/> PREFIX dcterm: <http://purl.org/dc/terms/> prefix void: <http://rdfs.org/ns/void#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dcterms: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix dc: <http://purl.org/dc/elements/1.1/> prefix dspace: <http://digital-repositories.org/ontologies/dspace/0.1.0#> SELECT * WHERE { GRAPH ?graph { ?resource dcterms:title ?title . OPTIONAL {?resource dcterms:creator ?author} . OPTIONAL {?resource dc:creator ?creator} . OPTIONAL {?resource dcterms:date ?date} . OPTIONAL {?resource dcterms:alternative ?alternative} . OPTIONAL {?resource bibo:uri ?uri} . OPTIONAL {?resource dcterms:created ?created} . OPTIONAL {?resource dc:advisor ?advisor} . OPTIONAL {?resource dc:publisher ?publisher} . OPTIONAL {?resource dcterms:bibliographicCitation ?bibCitation} . OPTIONAL {?resource dcterms:isPartOf ?partof} . OPTIONAL {?resource bibo:doi ?doi} . OPTIONAL {?resource bibo:handle ?handle} . OPTIONAL {?resource bibo:issn ?issn} . OPTIONAL {?resource bibo:sici ?sici} . OPTIONAL {?resource dc:language ?language} . OPTIONAL {?resource dc:subject ?subject} . OPTIONAL {?resource dcterms:abstract ?abstract} . OPTIONAL {?resource dc:sponsorship ?sponsorship} . OPTIONAL {?resource dcterms:description ?description} . OPTIONAL {?resource dcterms:issued ?issued} . } }";
+    let consulta_sparql = ""+
+    "PREFIX dct: <http://purl.org/dc/terms/>\n"+
+    "PREFIX dcterm: <http://purl.org/dc/terms/>\n"+
+    "prefix void: <http://rdfs.org/ns/void#>\n"+
+    "prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"+
+    "prefix xsd: <http://www.w3.org/2001/XMLSchema#>\n"+
+    "prefix dcterms: <http://purl.org/dc/terms/>\n"+
+    "prefix bibo: <http://purl.org/ontology/bibo/>\n"+
+    "prefix foaf: <http://xmlns.com/foaf/0.1/>\n"+
+    "prefix dc: <http://purl.org/dc/elements/1.1/>\n"+
+    "prefix dspace: <http://digital-repositories.org/ontologies/dspace/0.1.0#>\n"+
+    "SELECT *\n"+
+    "WHERE {\n"+
+    "  GRAPH ?graph {\n"+
+    "    ?resource dcterms:title ?title .\n"+
+    "     OPTIONAL {?resource dcterms:creator ?author} .\n"+
+    "     OPTIONAL {?resource dc:creator ?creator} .\n"+
+    "     OPTIONAL {?resource dcterms:date ?date} .\n"+
+    "     OPTIONAL {?resource dcterms:alternative ?alternative} .\n"+
+    "     OPTIONAL {?resource bibo:uri ?uri} .\n"+
+    "     OPTIONAL {?resource dcterms:created ?created} .\n"+
+    "     OPTIONAL {?resource dc:advisor ?advisor} .\n"+
+    "     OPTIONAL {?resource dc:publisher ?publisher} .\n"+
+    "     OPTIONAL {?resource dcterms:bibliographicCitation ?bibCitation} .\n"+
+    "     OPTIONAL {?resource dcterms:isPartOf ?partof} .\n"+
+    "     OPTIONAL {?resource bibo:doi ?doi} .\n"+
+    "     OPTIONAL {?resource bibo:handle ?handle} .\n"+
+    "     OPTIONAL {?resource bibo:issn ?issn} .\n"+
+    "     OPTIONAL {?resource bibo:sici ?sici} .\n"+
+    "     OPTIONAL {?resource dc:language ?language} .\n"+
+    "     OPTIONAL {?resource dc:subject ?subject} .\n"+
+    "     OPTIONAL {?resource dcterms:abstract ?abstract} .\n"+
+    "     OPTIONAL {?resource dc:sponsorship ?sponsorship} .\n"+
+    "     OPTIONAL {?resource dcterms:description ?description} .\n"+
+    "     OPTIONAL {?resource dcterms:issued ?issued} .\n"+
+    "   } }";
 
 
     let body = 'query='+ encodeURIComponent(consulta_sparql);
