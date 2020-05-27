@@ -21,6 +21,45 @@ function App() {
     obtenerRecursos(null);
   }
 
+
+
+
+  function complementarDatos(resultado){
+
+    let temp = resultado;
+
+
+    for (let [index,fila] of temp['results']['bindings'].entries()){
+
+      let fila_ordenada = {};
+
+      for (let header of temp['head']['vars']){
+        if (!(header in fila)){
+          fila[header] = 
+          {
+              "type": "literal",
+              "value": "Valor no encontrado"
+          }
+          ;
+        }
+      }
+
+      Object.keys(fila).sort().forEach(function(key) {
+        fila_ordenada[key] = fila[key];
+      });
+
+      temp['results']['bindings'][index] = fila_ordenada;
+
+      console.log(fila_ordenada);
+    }
+
+    temp['head']['vars'].sort();
+    console.log(temp);
+
+    return temp;
+
+  }
+
   function obtenerRecursos(termino){
     var myHeaders = new Headers();
 //    myHeaders.append("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0");
@@ -46,9 +85,11 @@ function App() {
       .then(response => response.text())
       .then(result => 
         {
-          setHeader(JSON.parse(result)['head']['vars']);
-          setResultado(JSON.parse(result)['results']['bindings']);
-          setResultadoFitrado(JSON.parse(result)['results']['bindings']);
+          console.log(JSON.parse(result));
+          let temp = complementarDatos(JSON.parse(result));
+          setHeader(temp['head']['vars']);
+          setResultado(temp['results']['bindings']);
+          setResultadoFitrado(temp['results']['bindings']);
         })
       .catch(error => console.log('error', error));
 
@@ -143,7 +184,7 @@ function App() {
           </div>
         </div>
         
-        <div className="flex overflow-auto h-128">
+        <div className="flex overflow-auto h-128 border-4">
           { Boolean(resultado_filtrado)
             ?
             <table className="table-auto mx-auto my-auto border-2">
