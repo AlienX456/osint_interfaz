@@ -7,7 +7,7 @@ function App() {
 
   const titulo = 'Metamodelo para vinculación de recursos educativos abiertos mediante especificaciones LOD y basado en principios de confianza';
   const subtitulo = 'Interfaz de Consulta';
-  const objetos_busqueda = {1:'Autor',2:'Institución',3:'Grupo',4:'Título',5:'Materias',6:'P. claves',7:'Colección',8:'Subcomunidad'};
+  const objetos_busqueda = {0:'Ninguno',1:'Autor',2:'Institución',3:'Grupo',4:'Título',5:'Materias',6:'P. claves',7:'Colección',8:'Subcomunidad'};
 
   const [header, setHeader] = useState(null);
 
@@ -57,24 +57,26 @@ function App() {
 
   }
 
-  function obtenerRecursos(termino){
-    var myHeaders = new Headers();
-//    myHeaders.append("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0");
-    myHeaders.append("Accept", "application/sparql-results+json,*/*;q=0.9");
-    myHeaders.append("Accept-Language", "en-US,en;q=0.5");
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-    myHeaders.append("X-Requested-With", "XMLHttpRequest");
-    myHeaders.append("Origin", "http://200.69.103.29:26237");
-    myHeaders.append("Connection", "keep-alive");
-    myHeaders.append("Referer", "http://200.69.103.29:26237/fuseki/dataset.html?tab=query&ds=/dspace");
 
-    var ejemplo = "query=PREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX+dcterm%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0Aprefix+void%3A++%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E+%0Aprefix+rdf%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E+%0Aprefix+xsd%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E+%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E+%0Aprefix+bibo%3A++%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E+%0Aprefix+foaf%3A++%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E+%0Aprefix+dc%3A++++%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E+%0Aprefix+dspace%3A+%3Chttp%3A%2F%2Fdigital-repositories.org%2Fontologies%2Fdspace%2F0.1.0%23%3E+%0A%0A%0A%0ASELECT++%3Ftitle+%3Fauthor+%3Fdate+%3Fgraph%0A%0AWHERE+%7B+%0A++GRAPH++%3Fgraph%0A++%7B%0A+%0A++++++%3Fresource+dcterms%3Atitle+%3Ftitle+.%0A++++++%3Fresource+dcterms%3Acontributor+%3Fauthor+.%0A++++++OPTIONAL+%7B%3Fresource+dcterms%3Adate+%3Fdate%7D+.%0A%7D%0A++%7D";
-    ejemplo = 'query=PREFIX+dct:+<http://purl.org/dc/terms/>\nPREFIX+dcterm:+<http://purl.org/dc/terms/>\nprefix+void:++<http://rdfs.org/ns/void#>+\nprefix+rdf:+++<http://www.w3.org/1999/02/22-rdf-syntax-ns#>+\nprefix+xsd:+++<http://www.w3.org/2001/XMLSchema#>+\nprefix+dcterms:+<http://purl.org/dc/terms/>+\nprefix+bibo:++<http://purl.org/ontology/bibo/>+\nprefix+foaf:++<http://xmlns.com/foaf/0.1/>+\nprefix+dc:++++<http://purl.org/dc/elements/1.1/>+\nprefix+dspace:+<http://digital-repositories.org/ontologies/dspace/0.1.0#>+\n\n\n\nSELECT++?title+?author+?creator+?date+?alternative+?uri+?created+?advisor+?publisher+?bibCitation+?partof+?doi+?handle+?issn+?sici+?language+?subject+?abstract+?sponsorship+?description+?issued\n\nWHERE+{+\n++GRAPH++?graph\n++{\n+\n++++++?resource+dcterms:title+?title+.\n++++++OPTIONAL+{?resource+dcterms:creator+?author}+.\n++++++OPTIONAL+{?resource+dc:creator+?creator}+.\n++++++OPTIONAL+{?resource+dcterms:date+?date}+.\n++++++OPTIONAL+{?resource+dcterms:alternative+?alternative}+.\n++++++OPTIONAL+{?resource+bibo:uri+?uri}+.\n++++++OPTIONAL+{?resource+dcterms:created+?created}+.\n++++++OPTIONAL+{?resource+dc:advisor+?advisor}+.\n++++++OPTIONAL+{?resource+dc:publisher+?publisher}+.\n++++++OPTIONAL+{?resource+dcterms:bibliographicCitation+?bibCitation}+.\n++++++OPTIONAL+{?resource+dcterms:isPartOf+?partof}+.\n++++++OPTIONAL+{?resource+bibo:doi+?doi}+.\n++++++OPTIONAL+{?resource+bibo:handle+?handle}+.\n++++++OPTIONAL+{?resource+bibo:issn+?issn}+.\n++++++OPTIONAL+{?resource+bibo:sici+?sici}+.\n++++++OPTIONAL+{?resource+dc:language++?language}+.\n++++++OPTIONAL+{?resource+dc:subject+?subject}+.\n++++++OPTIONAL+{?resource+dcterms:abstract+?abstract}+.\n++++++OPTIONAL+{?resource+dc:sponsorship+?sponsorship}+.\n++++++OPTIONAL+{?resource+dcterms:description+?description}+.\n++++++OPTIONAL+{?resource+dcterms:issued+?issued}+.\n++++\n}\n++}'
+
+
+  function obtenerRecursos(termino){
+
+
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+
+    let consulta_sparql = "PREFIX dct: <http://purl.org/dc/terms/> PREFIX dcterm: <http://purl.org/dc/terms/> prefix void: <http://rdfs.org/ns/void#> prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> prefix xsd: <http://www.w3.org/2001/XMLSchema#> prefix dcterms: <http://purl.org/dc/terms/> prefix bibo: <http://purl.org/ontology/bibo/> prefix foaf: <http://xmlns.com/foaf/0.1/> prefix dc: <http://purl.org/dc/elements/1.1/> prefix dspace: <http://digital-repositories.org/ontologies/dspace/0.1.0#> SELECT * WHERE { GRAPH ?graph { ?resource dcterms:title ?title . OPTIONAL {?resource dcterms:creator ?author} . OPTIONAL {?resource dc:creator ?creator} . OPTIONAL {?resource dcterms:date ?date} . OPTIONAL {?resource dcterms:alternative ?alternative} . OPTIONAL {?resource bibo:uri ?uri} . OPTIONAL {?resource dcterms:created ?created} . OPTIONAL {?resource dc:advisor ?advisor} . OPTIONAL {?resource dc:publisher ?publisher} . OPTIONAL {?resource dcterms:bibliographicCitation ?bibCitation} . OPTIONAL {?resource dcterms:isPartOf ?partof} . OPTIONAL {?resource bibo:doi ?doi} . OPTIONAL {?resource bibo:handle ?handle} . OPTIONAL {?resource bibo:issn ?issn} . OPTIONAL {?resource bibo:sici ?sici} . OPTIONAL {?resource dc:language ?language} . OPTIONAL {?resource dc:subject ?subject} . OPTIONAL {?resource dcterms:abstract ?abstract} . OPTIONAL {?resource dc:sponsorship ?sponsorship} . OPTIONAL {?resource dcterms:description ?description} . OPTIONAL {?resource dcterms:issued ?issued} . } }";
+
+
+    let body = 'query='+ encodeURIComponent(consulta_sparql);
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
-      body: ejemplo,
+      body: body,
       redirect: 'follow'
     };
 
