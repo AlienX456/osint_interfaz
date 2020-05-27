@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './tailwind.generated.css';
-import './font/Ubuntu-Light.ttf'
+import './font/Ubuntu-Light.ttf';
+import './assets/main.css';
 
 ReactDOM.render(
   <React.StrictMode>

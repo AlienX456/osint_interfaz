@@ -33,6 +33,7 @@ function App() {
     myHeaders.append("Referer", "http://200.69.103.29:26237/fuseki/dataset.html?tab=query&ds=/dspace");
 
     var ejemplo = "query=PREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX+dcterm%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0Aprefix+void%3A++%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E+%0Aprefix+rdf%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E+%0Aprefix+xsd%3A+++%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E+%0Aprefix+dcterms%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E+%0Aprefix+bibo%3A++%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fbibo%2F%3E+%0Aprefix+foaf%3A++%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E+%0Aprefix+dc%3A++++%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E+%0Aprefix+dspace%3A+%3Chttp%3A%2F%2Fdigital-repositories.org%2Fontologies%2Fdspace%2F0.1.0%23%3E+%0A%0A%0A%0ASELECT++%3Ftitle+%3Fauthor+%3Fdate+%3Fgraph%0A%0AWHERE+%7B+%0A++GRAPH++%3Fgraph%0A++%7B%0A+%0A++++++%3Fresource+dcterms%3Atitle+%3Ftitle+.%0A++++++%3Fresource+dcterms%3Acontributor+%3Fauthor+.%0A++++++OPTIONAL+%7B%3Fresource+dcterms%3Adate+%3Fdate%7D+.%0A%7D%0A++%7D";
+    ejemplo = 'query=PREFIX+dct:+<http://purl.org/dc/terms/>\nPREFIX+dcterm:+<http://purl.org/dc/terms/>\nprefix+void:++<http://rdfs.org/ns/void#>+\nprefix+rdf:+++<http://www.w3.org/1999/02/22-rdf-syntax-ns#>+\nprefix+xsd:+++<http://www.w3.org/2001/XMLSchema#>+\nprefix+dcterms:+<http://purl.org/dc/terms/>+\nprefix+bibo:++<http://purl.org/ontology/bibo/>+\nprefix+foaf:++<http://xmlns.com/foaf/0.1/>+\nprefix+dc:++++<http://purl.org/dc/elements/1.1/>+\nprefix+dspace:+<http://digital-repositories.org/ontologies/dspace/0.1.0#>+\n\n\n\nSELECT++?title+?author+?creator+?date+?alternative+?uri+?created+?advisor+?publisher+?bibCitation+?partof+?doi+?handle+?issn+?sici+?language+?subject+?abstract+?sponsorship+?description+?issued\n\nWHERE+{+\n++GRAPH++?graph\n++{\n+\n++++++?resource+dcterms:title+?title+.\n++++++OPTIONAL+{?resource+dcterms:creator+?author}+.\n++++++OPTIONAL+{?resource+dc:creator+?creator}+.\n++++++OPTIONAL+{?resource+dcterms:date+?date}+.\n++++++OPTIONAL+{?resource+dcterms:alternative+?alternative}+.\n++++++OPTIONAL+{?resource+bibo:uri+?uri}+.\n++++++OPTIONAL+{?resource+dcterms:created+?created}+.\n++++++OPTIONAL+{?resource+dc:advisor+?advisor}+.\n++++++OPTIONAL+{?resource+dc:publisher+?publisher}+.\n++++++OPTIONAL+{?resource+dcterms:bibliographicCitation+?bibCitation}+.\n++++++OPTIONAL+{?resource+dcterms:isPartOf+?partof}+.\n++++++OPTIONAL+{?resource+bibo:doi+?doi}+.\n++++++OPTIONAL+{?resource+bibo:handle+?handle}+.\n++++++OPTIONAL+{?resource+bibo:issn+?issn}+.\n++++++OPTIONAL+{?resource+bibo:sici+?sici}+.\n++++++OPTIONAL+{?resource+dc:language++?language}+.\n++++++OPTIONAL+{?resource+dc:subject+?subject}+.\n++++++OPTIONAL+{?resource+dcterms:abstract+?abstract}+.\n++++++OPTIONAL+{?resource+dc:sponsorship+?sponsorship}+.\n++++++OPTIONAL+{?resource+dcterms:description+?description}+.\n++++++OPTIONAL+{?resource+dcterms:issued+?issued}+.\n++++\n}\n++}'
 
     var requestOptions = {
       method: 'POST',
@@ -142,7 +143,7 @@ function App() {
           </div>
         </div>
         
-        <div className="flex overflow-auto">
+        <div className="flex overflow-auto h-128">
           { Boolean(resultado_filtrado)
             ?
             <table className="table-auto mx-auto my-auto border-2">
