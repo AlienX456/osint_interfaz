@@ -156,7 +156,7 @@ function App() {
                     )}
                   </select>
                 <label className="mb-1 md:mb-0 pr-4">
-                  Termino a consultar
+                  Término a consultar
                 </label>
                   <input className=" text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"/>
               </div>
@@ -184,12 +184,12 @@ function App() {
           { Boolean(resultado_filtrado)
             ?
             <table className="table-fixed mx-auto my-auto border-2">
-              <thead>
+              <thead className="bg-gray-400">
                 <tr>
 
                   {header.map
                     (
-                      (head) =><th className="px-4 py-2 w-64 border-2">{head}</th>
+                      (head) =><th className="px-4 py-2 w-64 border-2">{head.toUpperCase()}</th>
                     )
                   }
                 </tr>
