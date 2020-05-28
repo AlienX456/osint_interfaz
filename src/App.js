@@ -1,24 +1,43 @@
 import React, { useState } from 'react';
 import './App.css';
+/* eslint eqeqeq: 0 */
 
 
 function App() {
 
 
   const titulo = 'Metamodelo para vinculación de recursos educativos abiertos mediante especificaciones LOD y basado en principios de confianza';
+
   const subtitulo = 'Interfaz de Consulta';
-  const objetos_busqueda = {0:'Ninguno',1:'Autor',2:'Institución',3:'Grupo',4:'Título',5:'Materias',6:'P. claves',7:'Colección',8:'Subcomunidad'};
+
+  const objetos_busqueda = {'any':'Ninguno','author':'Autor',"NaN1":'Institución',"NaN2":'Grupo',"title":'Título',"NaN3":'Materias',"NaN4":'P. claves',"NaN5":'Colección',"NaN6":'Subcomunidad'};
 
   const [header, setHeader] = useState(null);
 
   const [resultado, setResultado] = useState(null);
 
   const [resultado_filtrado, setResultadoFitrado] = useState(resultado);
+
+  const [filtroSeleccionado, setFiltro] = useState({'filtro':'any','valor':'Ninguno'});
+
+  const [valorFiltro, setValorFiltro] = useState("");
+
+
+  function cambiarValorFiltroTermino(e){
+    setValorFiltro(e.target.value);
+  }
+
   
 
 
   function consultarRecursos(e){
-    obtenerRecursos(null);
+    if(filtroSeleccionado['filtro']=='any'){
+      console.log('any');
+      obtenerRecursos(null);
+    }else{
+      console.log('filter');
+      obtenerRecursos(filtroSeleccionado);
+    }
   }
 
 
@@ -60,15 +79,21 @@ function App() {
 
 
 
-  function obtenerRecursos(termino){
+  function obtenerRecursos(filtro_valor){
 
 
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+
+    let filtroSparql= "";
+
+    if (filtro_valor){
+      filtroSparql= "FILTER (?"+filtro_valor['filtro']+" = \""+filtro_valor['valor']+"\")";
+    }
 
 
-    let consulta_sparql = ""+
+    const consulta_sparql = ""+
     "PREFIX dct: <http://purl.org/dc/terms/>\n"+
     "PREFIX dcterm: <http://purl.org/dc/terms/>\n"+
     "prefix void: <http://rdfs.org/ns/void#>\n"+
@@ -103,7 +128,10 @@ function App() {
     "     OPTIONAL {?resource dc:sponsorship ?sponsorship} .\n"+
     "     OPTIONAL {?resource dcterms:description ?description} .\n"+
     "     OPTIONAL {?resource dcterms:issued ?issued} .\n"+
+    "     "+filtroSparql+"\n"+
     "   } }";
+
+    console.log(consulta_sparql);
 
 
     let body = 'query='+ encodeURIComponent(consulta_sparql);
@@ -119,6 +147,7 @@ function App() {
       .then(response => response.text())
       .then(result => 
         {
+          console.log(result);
           let temp = complementarDatos(JSON.parse(result));
           setHeader(temp['head']['vars']);
           setResultado(temp['results']['bindings']);
@@ -156,7 +185,20 @@ function App() {
 
     setResultadoFitrado(arreglo_filtrado);
 
-    }
+  }
+
+
+  function cambiarFiltro(e){
+
+    let termino_key = {};
+
+    termino_key['filtro'] =  Object.keys(objetos_busqueda).find(key =>  objetos_busqueda[key] === e.target.value);
+
+    termino_key['valor'] = valorFiltro;
+
+    setFiltro(termino_key);
+
+  }
 
 
 
@@ -178,16 +220,10 @@ function App() {
         <div className="flex flex-wrap py-8">
           <div className="flex w-3/4 mx-auto px-4 text-center text-xl py-8 bg-white shadow-md rounded px-8 pt-6 pb-8">
               <div className="w-2/4">
-                <label className="mx-auto block mb-4">
-                  <input className="mr-2 leading-tight" type="checkbox"/>
-                  <span className="text-sm">
-                    Habilitar consulta filtrada
-                  </span>
-                </label>
                 <label className="mb-1 md:mb-0 pr-4">
                   Buscar por
                 </label>
-                  <select className="text-center block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                  <select className="text-center block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" onChange={cambiarFiltro}>
                     {Object.entries(objetos_busqueda).map(
                       ([key, value]) => <option key={key} value={value} >{value}</option>
                     )}
@@ -195,7 +231,7 @@ function App() {
                 <label className="mb-1 md:mb-0 pr-4">
                   Término a consultar
                 </label>
-                  <input className=" text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"/>
+                  <input id="terminoBusqueda" className="text-center bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" onChange={cambiarValorFiltroTermino} />
               </div>
               <div className="w-2/4 mx-auto my-auto">
                 <button className="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={consultarRecursos}>
