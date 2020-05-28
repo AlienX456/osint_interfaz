@@ -32,10 +32,8 @@ function App() {
 
   function consultarRecursos(e){
     if(filtroSeleccionado['filtro']=='any'){
-      console.log('any');
       obtenerRecursos(null);
     }else{
-      console.log('filter');
       obtenerRecursos(filtroSeleccionado);
     }
   }
@@ -89,7 +87,7 @@ function App() {
     let filtroSparql= "";
 
     if (filtro_valor){
-      filtroSparql= "FILTER (?"+filtro_valor['filtro']+" = \""+filtro_valor['valor']+"\")";
+      filtroSparql= "FILTER (?"+filtro_valor['filtro']+" = \""+valorFiltro+"\")";
     }
 
 
@@ -131,8 +129,6 @@ function App() {
     "     "+filtroSparql+"\n"+
     "   } }";
 
-    console.log(consulta_sparql);
-
 
     let body = 'query='+ encodeURIComponent(consulta_sparql);
 
@@ -147,7 +143,6 @@ function App() {
       .then(response => response.text())
       .then(result => 
         {
-          console.log(result);
           let temp = complementarDatos(JSON.parse(result));
           setHeader(temp['head']['vars']);
           setResultado(temp['results']['bindings']);
@@ -193,8 +188,6 @@ function App() {
     let termino_key = {};
 
     termino_key['filtro'] =  Object.keys(objetos_busqueda).find(key =>  objetos_busqueda[key] === e.target.value);
-
-    termino_key['valor'] = valorFiltro;
 
     setFiltro(termino_key);
 
