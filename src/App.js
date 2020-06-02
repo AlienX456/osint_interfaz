@@ -10,7 +10,7 @@ function App() {
 
   const subtitulo = 'Interfaz de Consulta';
 
-  const objetos_busqueda = {'any':'Ninguno','author':'Autor',"NaN1":'Institución',"NaN2":'Grupo',"title":'Título',"NaN3":'Materias',"NaN4":'P. claves',"NaN5":'Colección',"NaN6":'Subcomunidad'};
+  const objetos_busqueda = {'any':'Ninguno','author':'Autor',"institution":'Institución',"group":'Grupo',"title":'Título',"educationalsubject":'Materias',"subject":'P. claves',"NaN5":'Colección',"NaN6":'Subcomunidad'};
 
   const [header, setHeader] = useState(null);
 
@@ -148,15 +148,14 @@ function App() {
     "     OPTIONAL {?resource parea:annotationentity ?annotationentity} .\n"+
     "     OPTIONAL {?resource parea:annotationdesc ?annotationdesc} .\n"+
     "     OPTIONAL {?resource foaf:organization ?organization} .\n"+
+    "     OPTIONAL {?resource foaf:group ?group} .\n"+
     "     OPTIONAL {?resource lrmi:educationalsubject ?educationalsubject} .\n"+
     "     OPTIONAL {?resource aiiso:knowledgegrouping ?knowledgegrouping} .\n"+
     "     OPTIONAL {?resource aiiso:course ?course} .\n"+
-    "     OPTIONAL {?resource aiiso:knowledgegrouping ?knowledgegrouping} .\n"+
     "     OPTIONAL {?resource aiiso:division ?division} .\n"+
     "     OPTIONAL {?resource aiiso:institution ?institution} .\n"+
     "     OPTIONAL {?resource dcterms:contributor ?contributor} .\n"+
     "     OPTIONAL {?resource dcterms:dateSubmitted ?dateSubmitted} .\n"+
-    "     OPTIONAL {?resource dc:date ?dateDC} .\n"+
     "     "+filtroSparql+"\n"+
     "   } }";
 
