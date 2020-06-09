@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 /* eslint eqeqeq: 0 */
 
@@ -27,7 +27,7 @@ function App() {
     setValorFiltro(e.target.value);
   }
 
-  
+  useEffect(() => {document.title = `UD-OSINT`;});  
 
 
   function consultarRecursos(e){
