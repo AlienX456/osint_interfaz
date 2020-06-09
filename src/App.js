@@ -10,7 +10,7 @@ function App() {
 
   const subtitulo = 'Interfaz de Consulta';
 
-  const objetos_busqueda = {'any':'Ninguno','author':'Autor',"NaN1":'Institución',"NaN2":'Grupo',"title":'Título',"NaN3":'Materias',"NaN4":'P. claves',"NaN5":'Colección',"NaN6":'Subcomunidad'};
+  const objetos_busqueda = {'any':'Ninguno','author':'Autor',"institution":'Institución',"group":'Grupo',"title":'Título',"educationalsubject":'Materias',"subject":'P. claves',"NaN5":'Colección',"NaN6":'Subcomunidad'};
 
   const [header, setHeader] = useState(null);
 
@@ -101,7 +101,10 @@ function App() {
     "prefix bibo: <http://purl.org/ontology/bibo/>\n"+
     "prefix foaf: <http://xmlns.com/foaf/0.1/>\n"+
     "prefix dc: <http://purl.org/dc/elements/1.1/>\n"+
+    "prefix parea: <http://parea.com/parea#>\n"+
     "prefix dspace: <http://digital-repositories.org/ontologies/dspace/0.1.0#>\n"+
+    "prefix lrmi: <http://purl.org/dcx/lrmi-terms/>\n"+
+    "prefix aiiso: <http://vocab.org/aiiso/schema#>\n"+
     "SELECT *\n"+
     "WHERE {\n"+
     "  GRAPH ?graph {\n"+
@@ -117,15 +120,42 @@ function App() {
     "     OPTIONAL {?resource dcterms:bibliographicCitation ?bibCitation} .\n"+
     "     OPTIONAL {?resource dcterms:isPartOf ?partof} .\n"+
     "     OPTIONAL {?resource bibo:doi ?doi} .\n"+
-    "     OPTIONAL {?resource bibo:handle ?handle} .\n"+
+    "     OPTIONAL {?resource bibo:isbn ?isbn} .\n"+
     "     OPTIONAL {?resource bibo:issn ?issn} .\n"+
     "     OPTIONAL {?resource bibo:sici ?sici} .\n"+
+    "     OPTIONAL {?resource dc:type ?type} .\n"+
     "     OPTIONAL {?resource dc:language ?language} .\n"+
     "     OPTIONAL {?resource dc:subject ?subject} .\n"+
     "     OPTIONAL {?resource dcterms:abstract ?abstract} .\n"+
     "     OPTIONAL {?resource dc:sponsorship ?sponsorship} .\n"+
     "     OPTIONAL {?resource dcterms:description ?description} .\n"+
     "     OPTIONAL {?resource dcterms:issued ?issued} .\n"+
+    "     OPTIONAL {?resource dcterms:available ?available} .\n"+
+    "     OPTIONAL {?resource dcterms:hasVersion ?hasVersion} .\n"+
+    "     OPTIONAL {?resource dcterms:modified ?modified} .\n"+
+    "     OPTIONAL {?resource dc:format ?format} .\n"+
+    "     OPTIONAL {?resource dcterms:requires ?requires} .\n"+
+    "     OPTIONAL {?resource parea:minimunversion ?minimunversion} .\n"+
+    "     OPTIONAL {?resource parea:interactivitylevel ?interactivitylevel} .\n"+  
+    "     OPTIONAL {?resource lrmi:interactivitytype ?interactivitytype} .\n"+
+    "     OPTIONAL {?resource dc:rights ?rights} .\n"+
+    "     OPTIONAL {?resource dcterms:rights ?rightsUri} .\n"+
+    "     OPTIONAL {?resource dcterms:dateCopyrighted ?dateCopyrighted} .\n"+
+    "     OPTIONAL {?resource parea:rightscost ?rightscost} .\n"+
+    "     OPTIONAL {?resource dcterms:audience ?audience} .\n"+
+    "     OPTIONAL {?resource lrmi:typicalagerange ?typicalagerange} .\n"+
+    "     OPTIONAL {?resource dcterms:educationlevel ?educationlevel} .\n"+
+    "     OPTIONAL {?resource parea:annotationentity ?annotationentity} .\n"+
+    "     OPTIONAL {?resource parea:annotationdesc ?annotationdesc} .\n"+
+    "     OPTIONAL {?resource foaf:organization ?organization} .\n"+
+    "     OPTIONAL {?resource foaf:group ?group} .\n"+
+    "     OPTIONAL {?resource lrmi:educationalsubject ?educationalsubject} .\n"+
+    "     OPTIONAL {?resource aiiso:knowledgegrouping ?knowledgegrouping} .\n"+
+    "     OPTIONAL {?resource aiiso:course ?course} .\n"+
+    "     OPTIONAL {?resource aiiso:division ?division} .\n"+
+    "     OPTIONAL {?resource aiiso:institution ?institution} .\n"+
+    "     OPTIONAL {?resource dcterms:contributor ?contributor} .\n"+
+    "     OPTIONAL {?resource dcterms:dateSubmitted ?dateSubmitted} .\n"+
     "     "+filtroSparql+"\n"+
     "   } }";
 
@@ -139,10 +169,13 @@ function App() {
       redirect: 'follow'
     };
 
+    console.log(consulta_sparql);
+
     fetch("http://200.69.103.29:26237/fuseki/dspace/sparql", requestOptions)
       .then(response => response.text())
       .then(result => 
         {
+          console.log(result);
           let temp = complementarDatos(JSON.parse(result));
           setHeader(temp['head']['vars']);
           setResultado(temp['results']['bindings']);
