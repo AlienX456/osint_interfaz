@@ -70,6 +70,40 @@ function App() {
 
     temp['head']['vars'].sort();
 
+    let aux_fila = {'resource':{'value':''}}
+
+    let new_bindings = []
+
+    for (let fila of temp['results']['bindings']){
+
+      if (aux_fila['resource']['value']==fila['resource']['value']){
+
+        for (let key of Object.keys(fila)){
+
+
+          if (!aux_fila[key]['value'].includes(fila[key]['value'])){
+
+            aux_fila[key]['value'] = aux_fila[key]['value'] +' - '+ fila[key]['value']
+
+          }
+  
+        }
+        
+        
+      }else{
+
+        if (aux_fila['resource']['value'] != ''){
+          new_bindings.push(aux_fila)
+        }
+        aux_fila = fila;
+      }
+    
+    }
+
+    new_bindings.push(aux_fila)
+
+    temp['results']['bindings'] = new_bindings
+
     return temp;
 
   }
@@ -157,7 +191,7 @@ function App() {
     "     OPTIONAL {?resource dcterms:contributor ?contributor} .\n"+
     "     OPTIONAL {?resource dcterms:dateSubmitted ?dateSubmitted} .\n"+
     "     "+filtroSparql+"\n"+
-    "   } }";
+    "   } } ORDER BY ASC(?resource)";
 
 
     let body = 'query='+ encodeURIComponent(consulta_sparql);
